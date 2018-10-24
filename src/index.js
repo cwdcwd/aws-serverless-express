@@ -29,13 +29,13 @@ function getPathWithQueryStringParams(event) {
 function getEventBody(event) {
   console.log('event.isBase64Encoded: ', event.isBase64Encoded)
   let b = Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8')
-    /*
-      if(event.headers && event.headers['Content-Encoding'] === 'gzip'){
-        console.log('we have got a gziped payload')
-        b = zlib.gunzipSync(new Buffer(event.body, 'base64'))
-        console.log('gunziped body to: ', b.toString())
-      }
-    */
+
+  if (event.headers && event.headers['Content-Encoding'] === 'gzip') {
+    console.log('we have got a gziped payload')
+    b = zlib.gunzipSync(new Buffer(event.body, 'base64'))
+    console.log('gunziped body to: ', b.toString())
+  }
+
   return b
 }
 
